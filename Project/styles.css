@@ -1,0 +1,13 @@
+.node { stroke: #fff; stroke-width: 1.5px; }
+.title { fill: steelblue; }
+.genre { fill: orange; }
+line.link { stroke: #999; stroke-opacity: 0.6; }
+text.label { opacity: 0; transition: opacity 0.2s; }
+h1{
+    padding-left: 29%;
+    padding-bottom:-25%;
+    font-family: "Geist", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
