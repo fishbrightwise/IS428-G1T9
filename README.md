@@ -36,7 +36,7 @@ Within this repository, you will find the following:
     1) Project Visualizations <br>
     Visual Analysis of Movie Data.
     <br><br>
-- D3 Project:
+- D3 Pages:
     1) Index Network Diagram <br>
     D3.js integrated Visual Analysis.
 
@@ -50,9 +50,13 @@ https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-criti
 ### How to use
 - For Visual Analysis:
     * Open Project Visualizations.twbx in /tableau folder.
-    * Open index.html in /Project folder.
     <br><br>
 - For Regression Analysis Predictions:
     1. Download datasets and add all 3 .csv files into /data folder.
     2. Run all files in /notebooks in sequence.
     3. Run 1_prediction-model-orchestrator.ipynb in /prediction_model_application with desired input values.
+- For D3 Application:
+    1. Open your Terminal
+    2. Navigate to the /d3 folder from your Terminal.
+    3. Run the following command: python -m http.server 8000 or python3 -m http.server 8000
+    4. Open your Internet Explorer and direct to http://localhost:8000/
