@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Hierarchical Graph</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    .node circle { fill: steelblue; stroke: #fff; stroke-width: 3px; }
+    .node text { font: 12px sans-serif; }
+    .link { fill: none; stroke: #ccc; stroke-width: 2px; }
+    .opening-header{
+    padding-left: 29%;
+    padding-bottom:-25%;
+    font-family: "Geist", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    }
+    .graph{
+      padding-left:25%;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="opening-header">Hierarchical Graph of Movies & Production Entities</h1>
+  <svg width="800" height="800" class="graph"></svg>
+  
+  <script>
+    const width = 800;
+    const height = 800;
+    const radius = width / 2;
+
+    const svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2},${height / 2})`);
+
+    // Create a radial tree layout
+    const tree = d3.tree()
+        .size([2 * Math.PI, radius - 100]);
+
+    d3.json("hierarchical_graph_data.json").then(function(data) {
+
+      // Convert data to a D3 hierarchy
+      const root = d3.hierarchy(data);
+      tree(root);
+
+      // Create links
+      const link = svg.append("g")
+          .selectAll("path")
+          .data(root.links())
+          .enter().append("path")
+          .attr("class", "link")
+          .attr("d", d3.linkRadial()
+              .angle(d => d.x)
+              .radius(d => d.y));
+
+      // Create nodes
+      const node = svg.append("g")
+          .selectAll("g")
+          .data(root.descendants())
+          .enter().append("g")
+          .attr("transform", d => `
+            rotate(${d.x * 180 / Math.PI - 90}) 
+            translate(${d.y},0)
+          `)
+          .attr("class", "node");
+
+      node.append("circle")
+          .attr("r", 5);
+
+      node.append("text")
+          .attr("dy", "0.31em")
+          .attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+          .attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+          .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+          .text(d => d.data.name);
+
+    });
+  </script>
+</body>
+</html>

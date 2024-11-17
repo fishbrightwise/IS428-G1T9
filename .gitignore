@@ -1,6 +1,5 @@
 *.csv
 nltk_data/
-tableau/
 .DS_Store
 *.json
 *.joblib
